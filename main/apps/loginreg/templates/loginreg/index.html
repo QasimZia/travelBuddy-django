@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Login & Reg | Home</title>
+    <link rel='stylesheet' href=''>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script>
+        $(document).ready(function() {
+        });
+    </script>
+    <style>
+        p {
+            color: red;
+        }
+
+        fieldset {
+            width: 20%;
+            margin: 0px auto;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>Registration</legend>
+
+        <form action='{% url "login:loginCreate" %}' method='post'>
+            {% csrf_token %}
+            {% for item in request.session.errors.fnameErrors %}
+                <p>{{item}}</p>
+            {% endfor %}
+            <label for='fname'>First Name: </label>
+            <input type='text' name='fname'>
+            <hr>
+            {% for item in request.session.errors.lnameErrors %}
+                <p>{{item}}</p>
+            {% endfor %}
+            <label for='lname'>Last Name: </label>
+            <input type='text' name='lname'>
+            <hr>
+            {% for item in request.session.errors.emailErrors %}
+                <p>{{item}}</p>
+            {% endfor %}
+            <label for='email'>Email: </label>
+            <input type='text' name='email'>
+            <hr>
+            {% for item in request.session.errors.pwordErrors %}
+                <p>{{item}}</p>
+            {% endfor %}
+            <label for='pword'>Password: </label>
+            <input type='password' name='pword'>
+            <hr>
+            {% for item in request.session.errors.confpwErrors %}
+                <p>{{item}}</p>
+            {% endfor %}
+            <label for='confpw'>Confirm Password: </label>
+            <input type='password' name='confpw'>
+            <hr>
+            <input type='submit' name='submit'>
+        </form>
+    </fieldset>
+    <fieldset>
+        <legend>Login</legend>
+        <form action='{% url "login:loginLogin" %}' method='post'>
+            {% csrf_token %}
+            {% for item in request.session.errors.emailLoginErrors %}
+                <p>{{item}}</p>
+            {% endfor %}
+            <label for='email_login'>Email: </label>
+            <input type='text' name='email_login'>
+            <hr>
+            {% for item in request.session.errors.pwordLoginErrors %}
+                <p>{{item}}</p>
+            {% endfor %}
+            <label for='pword_login'>Password: </label>
+            <input type='password' name='pword_login'>
+            <input type='submit' name='submit'>
+        </form>
+    </fieldset>
+</body>
+</html>

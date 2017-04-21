@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Travels</title>
+    <link rel='stylesheet' href=''>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script>
+        $(document).ready(function() {
+        });
+    </script>
+</head>
+<body>
+    <div class='wrapper'>
+        <div class='header'>
+            <h4>Welcome, {{request.session.logged_user}}!</h4>
+            <a href='{% url "travels:addTravels" %}'>Add travel plan</a>
+            <a href='{% url "login:signOut" %}'>Logout</a>
+        </div>
+        <div class='travels'>
+            <fieldset>
+                <legend>Your Upcoming Trips</legend>
+                <table>
+                    <thead>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Plan/Description</th>
+                    </thead>
+                    <tbody>
+                        {% for item in userTravels %}
+                        <tr>
+                            <td><a href='{% url "travels:destinationView" id=item.id %}'>{{item.destination}}</td>
+                            <td>{{item.start_date}}</td>
+                            <td>{{item.end_date}}</td>
+                            <td>{{item.description}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </fieldset>
+            <!-- -->
+            <fieldset>
+                <legend>All Trips</legend>
+                <table>
+                    <thead>
+                        <th>Planned by</th>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Plan/Description</th>
+                        <th>Join?</th>
+                    </thead>
+                    <tbody>
+                        {% for item in allTravels %}
+                        <tr>
+                            {% for itemB in users %}
+                                {% if item.plannedby_user_id == itemB.id %}
+                                    <td>{{itemB.first_name}} {{itemB.last_name}}</td>
+                                {% endif %}
+                            {% endfor %}
+                            <td><a href='{% url "travels:destinationView" id=item.id %}'>{{item.destination}}</td>
+                            <td>{{item.start_date}}</td>
+                            <td>{{item.end_date}}</td>
+                            <td>{{item.description}}</td>
+                            <td><a href='{% url "travels:tripJoin" id=item.id %}'>Join</a>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    </div>
+</body>
+</html>
